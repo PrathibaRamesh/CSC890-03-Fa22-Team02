@@ -42,7 +42,7 @@ export default class About extends Component {
                   </div>
                   <div class="content d-flex flex-column align-items-center justify-content-center">
                     <div>
-                      <h3 class="text-white fs-5">Prathiba Ramesh</h3>
+                      <h3 class="text-white fs-5">Prathiba Ramesh - Frontend Lead</h3>
                         <p class="fs-6 text-white">
                           An international graduate student at SFSU, currently in second semester. 
                           I have a previous work experience as Software Developer and am more interested into frontend technologies.
@@ -58,8 +58,8 @@ export default class About extends Component {
                     </div>
                       <div class="content d-flex flex-column align-items-center justify-content-center">
                         <div>
-                          <h3 class="text-white fs-5">Anudeep Katukojwala</h3>
-                          <p class="fs-6 text-white">Add your stuff</p>
+                          <h3 class="text-white fs-5">Anudeep Katukojwala - Backend Lead</h3>
+                          <p class="fs-6 text-white">I am a Graduate Student doing my Masters in Computer Science. I love to work on backend systems. I had a year and half experience of working in the tech industry. In my free time, I love to spend time exploring new places in the California state.</p>
                         </div>
                       </div>
                     </div>
