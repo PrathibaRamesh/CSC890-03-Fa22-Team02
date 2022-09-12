@@ -1,52 +1,12 @@
 import React, { Component } from "react";
+import Navbar from "./NavBar";
 
 export default class About extends Component {
   render() {
     return (
       <div>
-        <header id="header" class="header fixed-top d-flex align-items-center">
-          <div class="container d-flex align-items-center justify-content-between">
-            <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
-              <img src="assets/img/logo.png" alt="" />
-            <h1><span>|</span> Department of Computer Science</h1>
-            </a>
-
-            <nav id="navbar" class="navbar">
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#events">Events</a></li>
-              <li class="dropdown"><a href="#"><span>Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                <li class="dropdown"><a href="#"><span>Undergraduate</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul>
-                      <li><a href="#">Deep Drop Down 1</a></li>
-                      <li><a href="#">Deep Drop Down 2</a></li>
-                      <li><a href="#">Deep Drop Down 3</a></li>
-                      <li><a href="#">Deep Drop Down 4</a></li>
-                      <li><a href="#">Deep Drop Down 5</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown"><a href="#"><span>Graduate</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul>
-                      <li><a href="#">Deep Drop Down 1</a></li>
-                      <li><a href="#">Deep Drop Down 2</a></li>
-                      <li><a href="#">Deep Drop Down 3</a></li>
-                      <li><a href="#">Deep Drop Down 4</a></li>
-                      <li><a href="#">Deep Drop Down 5</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-            </nav>
-
-            <a class="btn-book-a-table" href="#sign-up">Sign Up</a>
-            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-          </div>
-        </header>
+        <Navbar />
+        
 
         <section id="home" class="hero d-flex align-items-center section-bg">
           <div class="container">
@@ -82,7 +42,7 @@ export default class About extends Component {
                   </div>
                   <div class="content d-flex flex-column align-items-center justify-content-center">
                     <div>
-                      <h3 class="text-white fs-5">Prathiba Ramesh</h3>
+                      <h3 class="text-white fs-5">Prathiba Ramesh - Frontend Lead</h3>
                         <p class="fs-6 text-white">
                           An international graduate student at SFSU, currently in second semester. 
                           I have a previous work experience as Software Developer and am more interested into frontend technologies.
@@ -98,8 +58,8 @@ export default class About extends Component {
                     </div>
                       <div class="content d-flex flex-column align-items-center justify-content-center">
                         <div>
-                          <h3 class="text-white fs-5">Anudeep Katukojwala</h3>
-                          <p class="fs-6 text-white">Add your stuff</p>
+                          <h3 class="text-white fs-5">Anudeep Katukojwala - Backend Lead</h3>
+                          <p class="fs-6 text-white">I am a Graduate Student doing my Masters in Computer Science. I love to work on backend systems. I had a year and half experience of working in the tech industry. In my free time, I love to spend time exploring new places in the California state.</p>
                         </div>
                       </div>
                     </div>
@@ -107,6 +67,45 @@ export default class About extends Component {
               </div>
           </div>
         </section>
+
+      <section id="menu" class="menu">
+      <div class="container" data-aos="fade-up">
+      <div class="section-header">
+          <p>Team Plan and Schedule </p>
+        </div>
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+          <div class="tab-pane fade active show" id="menu-starters">
+            <div class="row gy-5">
+              <div class="col-lg-6 menu-item">
+                <h4>Communication</h4>
+                <p class="ingredients">
+                  Discord Channel
+                </p>  
+                <br />           
+                <h4>Weekly meeting</h4>
+                <p class="ingredients">
+                  Friday @ 3PM PST via zoom
+                </p>
+              </div>
+
+              <div class="col-lg-6 menu-item">
+                <h4>Learning Plan</h4>
+                <p class="ingredients">
+                  September - OpenAI Learning
+                </p>
+                <p class="ingredients">
+                  October - Integrating Open AI into tech stack
+                </p>
+                <p class="ingredients">
+                  November - Fine Tunning in Open AI
+                </p>
+              </div>
+
+            </div>
+          </div>
+          </div>
+      </div>
+      </section>
         </main>
         
       </div>
