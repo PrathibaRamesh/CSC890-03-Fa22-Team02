@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../NavBar.jsx";
+import Navbar from "../NavBar.js";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
@@ -9,7 +9,7 @@ const Login = (props) => {
     
 
     const login = () => {
-        Axios.post('http://localhost:3002/login', {
+        Axios.post('http://localhost:3003/login', {
             userName: usernameLog,
             userPassword: passwordLog
         }).then((response) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../NavBar.jsx";
+import Navbar from "../NavBar.js";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
@@ -14,7 +14,7 @@ function Register() {
             window.location.href = '/register';
         }
         else {
-            Axios.post('http://localhost:3002/register', {
+            Axios.post('http://localhost:3003/register', {
                 userName: usernameReg,
                 userPassword: passwordReg
             }).then((response) => {
