@@ -3,6 +3,7 @@ import styles from "../../index.module.css";
 import Navbar from "../NavBar.js";
 
 const { Configuration, OpenAIApi } = require("openai");
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY
 
 const Help = (props) => {
     const [animalInput, setAnimalInput] = useState("");
@@ -10,46 +11,17 @@ const Help = (props) => {
 
     async function onSubmit(event) {
         event.preventDefault();
-        //const configuration = new Configuration({
-        //    apiKey: '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',
-        //});
-        //const openai = new OpenAIApi(configuration);
-
-        //openai.createCompletion("text-davinci-001", {
-        //    prompt: `Provide appropriate answers for the given questions
-        //    Question: Where is Chennai located?
-        //    Answer: TamilNadu, India
-        //    Question:  ${animalInput}
-        //    Answer:`,
-        //    temperature: 0.8,
-        //    max_tokens: 100,
-        //    top_p: 1,
-        //    frequency_penalty: 0,
-        //    presence_penalty: 0,
-        //}).then((response) => {
-        //        alert("triggered");
-        //    });
-        //const response = await fetch("/api/generate", {
-        //    method: "POST",
-        //    headers: {
-        //        "Content-Type": "application/json",
-        //    },
-        //    body: JSON.stringify({ animal: animalInput }),
-        //});
-        //const data = await response.json();
-        //setResult(data.result);
-        //setAnimalInput("");
 
         const response = await fetch('https://api.openai.com/v1/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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'
+                'Authorization': `Bearer ${apiKey}`
             },
             // body: '{\n  "model": "text-davinci-002",\n  "prompt": "",\n  "temperature": 0.7,\n  "max_tokens": 256,\n  "top_p": 1,\n  "frequency_penalty": 0,\n  "presence_penalty": 0\n}',
             body: JSON.stringify({
                 'model': 'text-davinci-002',
-                'prompt': `Provide appropriate answers for the given questions Question: What is your name? Answer: Hello! My name is GatorBuddy Question: ${animalInput } Answer:`,
+                'prompt': `Provide appropriate answers for the given questions and answer the folloup questions to previous question asked Question: What is your name? Answer: Hello! My name is GatorBuddy Question: ${animalInput } Answer:`,
                 'temperature': 0.8,
                 'max_tokens': 100,
                 'top_p': 1,
