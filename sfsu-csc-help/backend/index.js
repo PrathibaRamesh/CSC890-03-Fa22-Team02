@@ -8,9 +8,9 @@ app.use(cors());
 
 const db = mysql.createConnection({
     user : "root",
-    host: "localhost",
-    password: "root",
-    database: "mydb",
+    host: "34.170.175.124",
+    password: "sfsucshelp",
+    database: "cshelp",
 });
 
 app.post('/register', (req, res) => {
@@ -47,6 +47,24 @@ app.post('/login', (req, res) => {
             }
             else {
                 res.send({ message: "Wrong username and password combination!" });
+            }
+        }
+    );
+});
+
+app.post('/questionRegister', (req, res) => {
+
+    const userName = req.body.userName;
+    const question = req.body.question;
+    const answer = req.body.answer;
+    const feedback = req.body.feedback;
+
+    db.query(
+        "INSERT INTO userquestionlog (userName, question, answer, feedback) values (?,?,?,?)",
+        [userName, question, answer, feedback],
+        (err, result) => {
+            if (err != null) {
+                console.log(err);
             }
         }
     );

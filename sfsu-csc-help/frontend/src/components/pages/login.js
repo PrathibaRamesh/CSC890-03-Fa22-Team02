@@ -1,11 +1,14 @@
 import React from "react";
-import Navbar from "../NavBar.js";
+import Help from "../pages/help";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import { useState } from "react";
 
 const Login = (props) => {
-    const [usernameLog, setUsernameLog] = React.useState('');
-    const [passwordLog, setPasswordLog] = React.useState('');
+    const [usernameLog, setUsernameLog] = useState('');
+    const [passwordLog, setPasswordLog] = useState('');
+    const [userHelp, setuserHelp] = useState('');
+    const data = usernameLog;
     
 
     const login = () => {
@@ -65,6 +68,12 @@ const Login = (props) => {
                     </div>
                 </form>
             </div>
+
+            {userHelp ? (
+            <div>
+                <Help data={data} />
+                </div>
+                ) : ( null )}
         </div>
     );
 };
