@@ -33,9 +33,9 @@ const Help = (props) => {
             },
             // body: '{\n  "model": "text-davinci-002",\n  "prompt": "",\n  "temperature": 0.7,\n  "max_tokens": 256,\n  "top_p": 1,\n  "frequency_penalty": 0,\n  "presence_penalty": 0\n}',
             body: JSON.stringify({
-                'model': 'text-davinci-002',
-                'prompt': `Provide appropriate answers for the given questions and answer the followup questions to previous question asked Question: What is your name? Answer: Hello! My name is GatorBuddy Question: ${userInput} Answer:`,
-                'temperature': 0.8,
+                'model': 'davinci:ft-personal-2022-10-16-00-17-42',
+                'prompt': `Provide appropriate answers for the given question alone Question: ${userInput} Answer:`,
+                'temperature': 0,
                 'max_tokens': 100,
                 'top_p': 1,
                 'frequency_penalty': 0,
@@ -62,7 +62,7 @@ const Help = (props) => {
         }).then((response) => {
             console.log(response);
         });
-        //window.location.href = '/help';
+        window.location.href = '/help';
     }
 
         return (
