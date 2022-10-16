@@ -33,13 +33,14 @@ const Help = (props) => {
             },
             // body: '{\n  "model": "text-davinci-002",\n  "prompt": "",\n  "temperature": 0.7,\n  "max_tokens": 256,\n  "top_p": 1,\n  "frequency_penalty": 0,\n  "presence_penalty": 0\n}',
             body: JSON.stringify({
-                'model': 'davinci:ft-personal-2022-10-16-00-17-42',
+                'model': 'davinci:ft-personal-2022-10-16-15-36-02',
                 'prompt': `Provide appropriate answers for the given question alone Question: ${userInput} Answer:`,
                 'temperature': 0,
                 'max_tokens': 100,
                 'top_p': 1,
                 'frequency_penalty': 0,
-                'presence_penalty': 0
+                'presence_penalty': 0,
+                'stop': '\n'
             })
         });
         const data = await response.json();
