@@ -54,7 +54,7 @@ const Help = (props) => {
         console.log(props.data);
         const feedbackData = (feedbackUp ? 'yes' : ((feedbackDown) ? 'No' : null));
         console.log(feedbackData);
-        Axios.post('http://localhost:3003/questionRegister', {
+        Axios.post('/questionRegister', {
             userName: "TBD",
             question: userInput,
             answer: result,

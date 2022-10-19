@@ -14,7 +14,7 @@ function Register() {
             window.location.href = '/register';
         }
         else {
-            Axios.post('http://localhost:3003/register', {
+            Axios.post('/register', {
                 userName: usernameReg,
                 userPassword: passwordReg
             }).then((response) => {

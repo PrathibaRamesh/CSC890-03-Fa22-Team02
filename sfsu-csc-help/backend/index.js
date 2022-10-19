@@ -1,6 +1,7 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,11 @@ const db = mysql.createConnection({
     password: "sfsucshelp",
     database: "cshelp",
 });
+
+// Have Node serve the files for our built React app
+// Only use this middleware when you want to deploy.
+// On localhost comment it out.
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 app.post('/register', (req, res) => {
 
@@ -70,6 +76,15 @@ app.post('/questionRegister', (req, res) => {
     );
 });
 
-app.listen(3003, () => {
+// All other GET requests not handled before will return our React app.
+// On localhost comment it out, because in development version create
+// react app gets served by webpack dev server
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+  });
+
+
+
+app.listen(3008, () => {
     console.log("server running");
 });
