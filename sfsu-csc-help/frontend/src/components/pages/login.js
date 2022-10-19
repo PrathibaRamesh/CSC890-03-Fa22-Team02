@@ -12,7 +12,7 @@ const Login = (props) => {
     
 
     const login = () => {
-        Axios.post('http://localhost:3003/login', {
+        Axios.post('/login', {
             userName: usernameLog,
             userPassword: passwordLog
         }).then((response) => {
