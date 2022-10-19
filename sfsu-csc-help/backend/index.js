@@ -1,5 +1,8 @@
 const express = require("express");
-const mysql = require("mysql2");
+// If you have installed MYSQL 8.0 you need to use mysql2 package
+// instead of old mysql because of secure authentication process
+// which is not provided by mysql package.
+const mysql = require("mysql2"); 
 const cors = require("cors");
 const path = require("path");
 
