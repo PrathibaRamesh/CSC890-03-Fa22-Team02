@@ -7,6 +7,7 @@ import Home from "./components/pages/home";
 import Register from "./components/pages/register";
 import Login from "./components/pages/login";
 import Help from "./components/pages/help";
+import Dashboard from "./components/pages/dashboard";
 //import OpenAI from "./components/pages/api/openai";
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
                 <Route path="/register" element={<Register />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/" element={<Login />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 {/*<Route path="/api/openai" element={<OpenAI />} />*/}
         </Routes>
       </Router>

@@ -9,8 +9,8 @@ const Login = (props) => {
     const [passwordLog, setPasswordLog] = useState('');
     const [userHelp, setuserHelp] = useState('');
     const data = usernameLog;
-    
-
+    var globalVar = window.sessionStorage;
+    globalVar.setItem("username", data);
     const login = () => {
         Axios.post('/login', {
             userName: usernameLog,

@@ -61,6 +61,25 @@ app.post('/login', (req, res) => {
     );
 });
 
+app.post('/getFeedbackData', (req, res) => {
+
+    db.query(
+        "SELECT * FROM userquestionlog",
+        (err, result) => {
+            if (err) {
+                //console.log(err);
+                res.send({ err: err });
+            }
+            if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "No data available!!" });
+            }
+        }
+    );
+});
+
 app.post('/questionRegister', (req, res) => {
 
     const userName = req.body.userName;
@@ -88,6 +107,6 @@ app.get("*", (req, res) => {
 
 
 
-app.listen(3001, () => {
+app.listen(3008, () => {
     console.log("server running");
 });
