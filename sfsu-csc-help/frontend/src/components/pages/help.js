@@ -12,6 +12,8 @@ const Help = (props) => {
     const [feedback, setFeedback] = useState(false);
     const [feedbackUp, setFeedbackUp] = useState(false);
     const [feedbackDown, setFeedbackDown] = useState(false);
+    var globalVar = window.sessionStorage;
+    var loggedname = globalVar.getItem("username");
 
     async function thumbsUpFunction(event) {
         event.preventDefault();
@@ -24,7 +26,6 @@ const Help = (props) => {
 
     async function onAskQuestion(event) {
         event.preventDefault();
-
         const response = await fetch('https://api.openai.com/v1/completions', {
             method: 'POST',
             headers: {
@@ -33,9 +34,9 @@ const Help = (props) => {
             },
             // body: '{\n  "model": "text-davinci-002",\n  "prompt": "",\n  "temperature": 0.7,\n  "max_tokens": 256,\n  "top_p": 1,\n  "frequency_penalty": 0,\n  "presence_penalty": 0\n}',
             body: JSON.stringify({
-                'model': 'davinci:ft-personal-2022-10-16-15-36-02',
-                'prompt': `Provide appropriate answers for the given question alone Question: ${userInput} Answer:`,
-                'temperature': 0,
+                'model': 'davinci:ft-personal-2022-10-30-00-57-34',
+                'prompt': `Provide an appropriate answer for the given question Question: ${userInput} Answer:`,
+                'temperature': 0.8,
                 'max_tokens': 100,
                 'top_p': 1,
                 'frequency_penalty': 0,
@@ -44,6 +45,7 @@ const Help = (props) => {
             })
         });
         const data = await response.json();
+        //console.log(loggedname);
         setResult(data.choices[0].text);
         setUserInput(userInput);
         setFeedback(true);
@@ -55,7 +57,7 @@ const Help = (props) => {
         const feedbackData = (feedbackUp ? 'yes' : ((feedbackDown) ? 'No' : null));
         console.log(feedbackData);
         Axios.post('/questionRegister', {
-            userName: "TBD",
+            userName: loggedname,
             question: userInput,
             answer: result,
             feedback: feedbackData,
