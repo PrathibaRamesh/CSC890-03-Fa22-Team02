@@ -11,10 +11,10 @@ app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
-    user : "root",
+    user : "csc890",
     host: "34.170.175.124",
-    password: "sfsucshelp",
-    database: "cshelp",
+    password: "Sfsuhelp890",
+    database: "cschelp",
 });
 
 // Have Node serve the files for our built React app
