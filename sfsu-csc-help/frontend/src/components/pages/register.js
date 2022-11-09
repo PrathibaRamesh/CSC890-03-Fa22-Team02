@@ -18,10 +18,32 @@ function Register() {
                 userName: usernameReg,
                 userPassword: passwordReg
             }).then((response) => {
-                console.log(response);
-            });
-            alert("Registration Successful!!");
-            window.location.href = '/home';
+                console.log("Happy");
+
+                    if (response.data.message1) {
+                        console.log(response.data);
+                        alert(response.data.message1);
+                        window.location.href = '/register';
+                        //console.log(response.data.message1);
+                    }
+                    else if(response.data.message2){
+                        console.log(response.data);
+                        alert(response.data.message2);
+                        window.location.href = '/register'
+                        //console.log(response.data.message2);
+                    }
+                    else if(response.data.message3){
+
+                        console.log("Registration Successful!!");
+                        alert(response.data.message3);
+                        window.location.href = '/home';
+                    }
+                    
+                });
+
+               
+            
+           
         }
     };
 
