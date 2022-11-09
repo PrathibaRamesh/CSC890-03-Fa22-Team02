@@ -26,3 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 /.vs
+
+~$openai_dataset.xlsx
+~$openai_dataset_finetune.xlsx
+
