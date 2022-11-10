@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../NavBar.js";
 
 const Home = (props) => {
+    window.history.forward();
         return (
             <div>
                 <Navbar />

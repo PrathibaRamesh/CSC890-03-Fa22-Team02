@@ -5,26 +5,30 @@ import Axios from "axios";
 import { useState } from "react";
 
 const Login = (props) => {
+    window.history.forward();
     const [usernameLog, setUsernameLog] = useState('');
     const [passwordLog, setPasswordLog] = useState('');
     const [userHelp, setuserHelp] = useState('');
+    const [userRole, setuserRole] = useState('');
     const data = usernameLog;
     var globalVar = window.sessionStorage;
     globalVar.setItem("username", data);
+    const userRoleData = userRole;
+    globalVar.setItem("userRole", userRoleData);
     const login = () => {
         Axios.post('/login', {
             userName: usernameLog,
             userPassword: passwordLog
         }).then((response) => {
-
             if (response.data.message) {
                 alert(response.data.message);
                 window.location.href = '/';
             }
             else {
+                console.log(response.data[0].userRole);
+                setuserRole(response.data[0].userRole);
                 window.location.href = '/home';
             }
-            console.log(response.data);
         });
     };
 
@@ -39,7 +43,7 @@ const Login = (props) => {
                         <input
                             type="text"
                             id="exampleInputEmail1"
-                            placeholder="email / username"
+                            placeholder="Student ID"
                             required
                             autoFocus
                             onChange={(e) => { setUsernameLog(e.target.value) }} />
