@@ -2,26 +2,40 @@ import { useState } from "react";
 import styles from "../../index.module.css";
 import Navbar from "../NavBar.js";
 import Axios from "axios";
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
 
 const { Configuration, OpenAIApi } = require("openai");
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 const Help = (props) => {
+    window.history.forward();
     const [userInput, setUserInput] = useState("");
+    const [userComments, setuserComments] = useState("");
     const [result, setResult] = useState();
     const [feedback, setFeedback] = useState(false);
     const [feedbackUp, setFeedbackUp] = useState(false);
     const [feedbackDown, setFeedbackDown] = useState(false);
+    const [value, setValue] = useState(2);
+    const [hover, setHover] = useState(-1);
+    const [isActiveDown, setIsActiveDown] = useState(false);
+    const [isActiveUp, setIsActiveUp] = useState(false);
     var globalVar = window.sessionStorage;
     var loggedname = globalVar.getItem("username");
+    var userRole = globalVar.getItem("userRole");
 
     async function thumbsUpFunction(event) {
         event.preventDefault();
         setFeedbackUp(true);
+        setIsActiveUp(true);
+        setIsActiveDown(false);
     }
     async function thumbsDownFunction(event) {
         event.preventDefault();
         setFeedbackDown(true);
+        setIsActiveDown(true);
+        setIsActiveUp(false);
     }
 
     async function onAskQuestion(event) {
@@ -45,7 +59,6 @@ const Help = (props) => {
             })
         });
         const data = await response.json();
-        //console.log(loggedname);
         setResult(data.choices[0].text);
         setUserInput(userInput);
         setFeedback(true);
@@ -61,11 +74,26 @@ const Help = (props) => {
             question: userInput,
             answer: result,
             feedback: feedbackData,
+            rating: value,
+            comment: userComments,
+            userRole: userRole
             
         }).then((response) => {
             console.log(response);
         });
         window.location.href = '/help';
+    }
+
+    const labels = {
+        1: 'Poor',
+        2: 'Ok',
+        3: 'Good',
+        4: 'Very Good',
+        5: 'Excellent',
+    };
+
+    function getLabelText(value) {
+        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
     }
 
         return (
@@ -99,16 +127,52 @@ const Help = (props) => {
                                 <span class="fw-500">Are you satisfied with the answer?</span>
                                 <div class="row mb-5 mt-5">
                                     <div class="col-md-6">
-                                        <span class="thumb thumbs-up"><i onClick={thumbsUpFunction} class="bi bi-hand-thumbs-up"></i></span>
-                                        <small class="fw-500">Yes</small>
+                                            <span class="thumb thumbs-up" style={{
+                                                backgroundColor: isActiveUp ? 'green' : '',
+                                                color: isActiveUp ? 'white' : '',
+                                            }}><i onClick={thumbsUpFunction} class="bi bi-hand-thumbs-up"></i></span>
+                                            <small class="fw-500">&nbsp; Yes</small>
                                     </div>
                                     <div class="col-md-6">
-                                        <span class="thumb thumbs-down"><i onClick={thumbsDownFunction} class="bi bi-hand-thumbs-down"></i></span>
-                                        <small class="fw-500">No</small>
+                                            <span class="thumb thumbs-down" style={{
+                                                backgroundColor: isActiveDown ? 'red' : '',
+                                                color: isActiveDown ? 'white' : '',
+                                            }}><i onClick={thumbsDownFunction} class="bi bi-hand-thumbs-down"></i></span>
+                                        <small class="fw-500">&nbsp;  No</small>
                                     </div>
+                                    </div>
+                                    <div class="container d-flex justify-content-center">
+                                        <Rating
+                                            name="hover-feedback"
+                                            value={value}
+                                            getLabelText={getLabelText}
+                                            onChange={(event, newValue) => {
+                                                setValue(newValue);
+                                            }}
+                                            onChangeActive={(event, newHover) => {
+                                                setHover(newHover);
+                                            }}
+                                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                                        />
+                                        {value !== null && (
+                                            <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+                                        )}
+                                    </div>
+                                    <br />
+                                    <div class="container d-flex justify-content-center">
+                                        <input
+                                            type="text"
+                                            name="comments"
+                                            placeholder="comments if any"
+                                            value={userComments}
+                                            onChange={(e) => setuserComments(e.target.value)}
+                                        />
+                                    </div>
+                                    <br />
                                 </div>
+
                             </div>
-                            </div>
+                           
                             <div className={styles.main}>
                                 <form onSubmit={onSubmit}>
                                     <input type="submit" value="Next Question" />
