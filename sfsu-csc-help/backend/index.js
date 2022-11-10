@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 3008;
+const PORT = 3000;
 
 // Used in encryption
 let key = "xcdade22kao^mdq&";
@@ -51,6 +51,9 @@ app.post('/register', (req, res) => {
 
     const userName = req.body.userName;
     const userPassword = req.body.userPassword;
+    const studentID = req.body.studentID;
+    const studentName = req.body.studentName;
+    const userRole = req.body.userRole;
 
     if(!isEmail(userName)){
         res.send({ message1: "Incorrect email format. Please correct it!" });
@@ -58,7 +61,7 @@ app.post('/register', (req, res) => {
     }   
 
     else if(!isValidPassword(userPassword)){
-        res.send({message2: "Incorrect password format. Please correct it!"});
+        res.send({message2: "Password must contain 8 to 13 characters without special characters. Please correct it!"});
         //console.log("Incorrect password format");
     }
     else{
@@ -68,8 +71,8 @@ app.post('/register', (req, res) => {
         //console.log("Hashed Password is: "+hashedPassword);
 
         db.query(
-            "INSERT INTO users (userName, userPassword) values (?,?)",
-            [userName, hashedPassword],
+            "INSERT INTO users (userName, userPassword, studentID, studentName, userRole) values (?,?,?,?,?)",
+            [userName, hashedPassword, studentID, studentName, userRole],
             (err, result) => {
                 if (err != null) {
                     console.log(err);
@@ -90,7 +93,7 @@ app.post('/login', (req, res) => {
     const hashedPassword = aesEcb.encrypt(key, userPassword);
     //console.log("Hashed Password when checking: "+originalPassword);
     db.query(
-        "SELECT * FROM users WHERE userName = ? AND userPassword = ?",
+        "SELECT * FROM users WHERE studentID = ? AND userPassword = ?",
         [userName, hashedPassword],
         (err, result) => {
             if (err) {
@@ -98,7 +101,7 @@ app.post('/login', (req, res) => {
                 res.send({ err: err });
             }
             if (result.length > 0) {
-                res.send(result)
+                res.send(result);
             }
             else {
                 res.send({ message: "Wrong username and password combination!" });
@@ -109,21 +112,42 @@ app.post('/login', (req, res) => {
 
 app.post('/getFeedbackData', (req, res) => {
 
-    db.query(
-        "SELECT * FROM userquestionlog",
-        (err, result) => {
-            if (err) {
-                //console.log(err);
-                res.send({ err: err });
+    const userRole = req.body.userRole;
+    const username = req.body.username;
+
+    if (userRole === "General User") {
+        db.query(
+            "SELECT * FROM userquestionlog WHERE username = ?",
+            [username],
+            (err, result) => {
+                if (err) {
+                    res.send({ err: err });
+                }
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "No data available!!" });
+                }
             }
-            if (result.length > 0) {
-                res.send(result)
+        );
+    }
+    else if (userRole === "Administrator") {
+        db.query(
+            "SELECT * FROM userquestionlog",
+            (err, result) => {
+                if (err) {
+                    res.send({ err: err });
+                }
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "No data available!!" });
+                }
             }
-            else {
-                res.send({ message: "No data available!!" });
-            }
-        }
-    );
+        );
+    }
 });
 
 app.post('/questionRegister', (req, res) => {
@@ -132,10 +156,13 @@ app.post('/questionRegister', (req, res) => {
     const question = req.body.question;
     const answer = req.body.answer;
     const feedback = req.body.feedback;
+    const comment = req.body.comment;
+    const rating = req.body.rating;
+    const userRole = req.body.userRole;
 
     db.query(
-        "INSERT INTO userquestionlog (userName, question, answer, feedback) values (?,?,?,?)",
-        [userName, question, answer, feedback],
+        "INSERT INTO userquestionlog (userName, question, answer, feedback, rating, comment, userRole) values (?,?,?,?,?,?,?)",
+        [userName, question, answer, feedback, rating, comment, userRole],
         (err, result) => {
             if (err != null) {
                 console.log(err);
