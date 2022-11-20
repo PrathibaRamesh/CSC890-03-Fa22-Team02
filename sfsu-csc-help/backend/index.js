@@ -91,6 +91,7 @@ app.post('/login', (req, res) => {
     const userName = req.body.userName;
     const userPassword = req.body.userPassword;
     const hashedPassword = aesEcb.encrypt(key, userPassword);
+    console.log("Original Password when checking: "+userName);
     console.log("Hashed Password when checking: "+hashedPassword);
     db.query(
         "SELECT * FROM users WHERE studentID = ? AND userPassword = ?",
