@@ -68,7 +68,7 @@ app.post('/register', (req, res) => {
 
         //hashing the password
         const hashedPassword = aesEcb.encrypt(key, userPassword);
-        //console.log("Hashed Password is: "+hashedPassword);
+        console.log("Hashed Password is: "+hashedPassword);
 
         db.query(
             "INSERT INTO users (userName, userPassword, studentID, studentName, userRole) values (?,?,?,?,?)",
@@ -94,7 +94,7 @@ app.post('/login', (req, res) => {
     console.log("Original Password when checking: "+userPassword);
     console.log("Hashed Password when checking: "+hashedPassword);
     db.query(
-        "SELECT * FROM users WHERE studentID = ? AND userPassword = ?",
+        "SELECT * FROM users WHERE userPassword = ? AND userPassword = ?",
         [userName, hashedPassword],
         (err, result) => {
             if (err) {
