@@ -91,7 +91,7 @@ app.post('/login', (req, res) => {
     console.log("Original Password when checking: "+userPassword);
     console.log("Hashed Password when checking: "+hashedPassword);
     db.query(
-        "SELECT * FROM users WHERE userName = ? AND userPassword = ?",
+        "SELECT * FROM users WHERE studentID = ? AND userPassword = ?",
         [userName, hashedPassword],
         (err, result) => {
             if (err) {

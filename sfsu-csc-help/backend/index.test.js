@@ -73,18 +73,18 @@ describe("register route", () => {
 describe("login route", () => {
     test("testing login verification", async () => {
         const res = await request(app).post('/login').send({
-            userName: "happy@gmail.com",
-            userPassword: "vishwa123",
+            userName: "99889",
+            userPassword: "Asdfasdf",
             // studentID: "123456",
             // studentName: "anudeep",
             // userRole: "admin"
         });
 
-        expect(res.body).toEqual([{"studentID": null, "studentName": null, "userName": "happy@gmail.com", "userPassword": "jGwd6BiyeqrVxCbe6+Xk8g==", "userRole": null}]);
+        expect(res.statusCode).toEqual(200);
     })
     test("testing login icorrect part of the code", async () => {
         const res = await request(app).post('/login').send({
-            userName: "happy@gmail.com",
+            userName: "99889",
             userPassword: "deep",
             //studentID: "123456",
             //studentName: "anudeep",
