@@ -7,7 +7,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const path = require("path");
 const mysqlDetails = require("./connectionDetails");
-
+const helper = require("./helperFunc");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -31,20 +31,6 @@ const db = mysql.createConnection({
 app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 
-//Helper functions to perform miscellaneous actions
-const isEmail = (email) => {
-    const validEmail =
-      /^(?=.{1,45}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
-    return validEmail.test(email);
-  };
-
-
-const isValidPassword = (password) => {
-    const validPassword = /^(?=.{8,13}$)[0-9a-zA-Z]+$/;
-  
-   
-    return validPassword.test(password);
-  };
 
 
 app.post('/register', (req, res) => {
@@ -55,12 +41,23 @@ app.post('/register', (req, res) => {
     const studentName = req.body.studentName;
     const userRole = req.body.userRole;
 
-    if(!isEmail(userName)){
+    console.log("We are in register page");
+    // if(!req.body.userName || !req.body.userPassword || !req.body.studentID || !req.body.studentName || !req.body.userRole){
+    //     console.log("We are here");
+    //     res.status(400).json('you need to pass firstname');
+    //     return;
+    // }
+    // else{
+    //     res.sendStatus(201);
+    //     return;
+    // }
+
+    if(!helper.isEmail(userName)){
         res.send({ message1: "Incorrect email format. Please correct it!" });
         //console.log("Incorrect email format");
     }   
 
-    else if(!isValidPassword(userPassword)){
+    else if(!helper.isValidPassword(userPassword)){
         res.send({message2: "Password must contain 8 to 13 characters without special characters. Please correct it!"});
         //console.log("Incorrect password format");
     }
@@ -68,7 +65,7 @@ app.post('/register', (req, res) => {
 
         //hashing the password
         const hashedPassword = aesEcb.encrypt(key, userPassword);
-        //console.log("Hashed Password is: "+hashedPassword);
+        console.log("Hashed Password is: "+hashedPassword);
 
         db.query(
             "INSERT INTO users (userName, userPassword, studentID, studentName, userRole) values (?,?,?,?,?)",
@@ -91,7 +88,8 @@ app.post('/login', (req, res) => {
     const userName = req.body.userName;
     const userPassword = req.body.userPassword;
     const hashedPassword = aesEcb.encrypt(key, userPassword);
-    //console.log("Hashed Password when checking: "+originalPassword);
+    console.log("Original Password when checking: "+userPassword);
+    console.log("Hashed Password when checking: "+hashedPassword);
     db.query(
         "SELECT * FROM users WHERE studentID = ? AND userPassword = ?",
         [userName, hashedPassword],
@@ -101,6 +99,7 @@ app.post('/login', (req, res) => {
                 res.send({ err: err });
             }
             if (result.length > 0) {
+                res.statusCode = 200;
                 res.send(result);
             }
             else {
@@ -124,6 +123,7 @@ app.post('/getFeedbackData', (req, res) => {
                     res.send({ err: err });
                 }
                 if (result.length > 0) {
+                    res.sendStatus(200);
                     res.send(result)
                 }
                 else {
@@ -140,6 +140,7 @@ app.post('/getFeedbackData', (req, res) => {
                     res.send({ err: err });
                 }
                 if (result.length > 0) {
+                    res.statusCode = 200;
                     res.send(result)
                 }
                 else {
@@ -160,12 +161,24 @@ app.post('/questionRegister', (req, res) => {
     const rating = req.body.rating;
     const userRole = req.body.userRole;
 
+    console.log("We are in questionRegister page");
+    if(!req.body.userName || !req.body.question || !req.body.answer || !req.body.feedback || !req.body.comment || !req.body.rating || !req.body.userRole){
+        console.log("We are here");
+        res.status(400).json('you need to pass firstname');
+        return;
+    }
+    
+
+
     db.query(
         "INSERT INTO userquestionlog (userName, question, answer, feedback, rating, comment, userRole) values (?,?,?,?,?,?,?)",
         [userName, question, answer, feedback, rating, comment, userRole],
         (err, result) => {
             if (err != null) {
                 console.log(err);
+            }
+            else{
+                res.sendStatus(200);
             }
         }
     );
@@ -175,11 +188,15 @@ app.post('/questionRegister', (req, res) => {
 // On localhost comment it out, because in development version create
 // react app gets served by webpack dev server
 app.get("*", (req, res) => {
+    
     res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
   });
 
 
 
 app.listen(PORT, () => {
+    
     console.log(`Server running on port ${PORT} \n`);
 });
+
+module.exports = app;
