@@ -123,7 +123,7 @@ app.post('/getFeedbackData', (req, res) => {
                     res.send({ err: err });
                 }
                 if (result.length > 0) {
-                    res.sendStatus(200);
+                    res.statusCode = 200;
                     res.send(result)
                 }
                 else {
