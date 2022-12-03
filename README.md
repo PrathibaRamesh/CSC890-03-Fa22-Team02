@@ -1,4 +1,4 @@
-# CSC890-03-Fa22-Team02 - GatorBuddy SFSU CSC SElf Help Portal App
+# CSC890-03-Fa22-Team02 - GatorBuddy SFSU CSC Self Help Portal App
 
 ## Setup
 1. Clone this repository
@@ -11,7 +11,7 @@
    ```
 3. Install the requirements
    ```bash
-    npm install
+    npm install --save --legacy-peer-deps
    ```
 4. Run the following command
     ```bash
