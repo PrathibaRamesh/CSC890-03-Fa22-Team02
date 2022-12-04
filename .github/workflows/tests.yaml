@@ -1,0 +1,22 @@
+
+name: 'Tests'
+
+on:
+  pull_request:
+  workflow_dispatch: #Allow manual triggering of the workflow
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./sfsu-csc-help/backend
+        run: npm ci
+      - name: Run Tests
+        working-directory: ./sfsu-csc-help/backend
+        run: |
+          npx jest --coverage --coverageReporters json-summary
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
