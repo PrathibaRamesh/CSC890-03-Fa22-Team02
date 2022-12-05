@@ -3,7 +3,7 @@ const helper = require("./helperFunc");
 const request = require("supertest");
 const { v4: uuidv4 } = require('uuid');
 
-const myuuid = uuidv4();
+
 
 //generate random string of requrired length
 function makeid(length) {
