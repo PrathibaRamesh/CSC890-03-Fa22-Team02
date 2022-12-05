@@ -75,6 +75,7 @@ app.post('/register', (req, res) => {
                     console.log(err);
                 }
                 else{
+                    res.statusCode = 250;
                     res.send({message3: "Registration successful!!!"});
                 }
             }

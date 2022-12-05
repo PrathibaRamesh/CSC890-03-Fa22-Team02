@@ -1,10 +1,24 @@
 const app = require("./index");
 const helper = require("./helperFunc");
 const request = require("supertest");
+const { v4: uuidv4 } = require('uuid');
 
 
 
+//generate random string of requrired length
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
+
+const abc = makeid(5);
+const bbc = abc+"@gmail.com";
 
 describe("Testing validation functions", () => {
 
@@ -44,28 +58,20 @@ describe("register route", () => {
         expect(res.body).toEqual({message2: "Password must contain 8 to 13 characters without special characters. Please correct it!"});
     })
 
-    // test("testing successfull registration", async () => {
-    //     const res = await request(app).post('/register').send({
-    //         userName: "happy@gmail.com",
-    //         userPassword: "vishwa123",
-    //         //studentID: "123456",
-    //         //studentName: "anudeep",
-    //         //userRole: "admin"
-    //     });
-
-    //     expect(res.body).toEqual({message3: "Registration successful!!!"});
-    // })
+    //test comment
+    
 
       test("testing successfull registration", async () => {
         const res = await request(app).post('/register').send({
-            userName: "papper@gmail.com",
+            
+            userName: bbc,
             userPassword: "papper123",
             //studentID: "123456",
             //studentName: "anudeep",
             //userRole: "admin"
         });
 
-        expect(res.body).toEqual({message3: "Registration successful!!!"});
+        expect(res.statusCode).toEqual(250);
     })
 })
 
@@ -101,7 +107,7 @@ describe("getFeedbackData route", () => {
     test("testing data if userRole is General User", async () => {
         const res = await request(app).post('/getFeedbackData').send({
             userRole: "General User",
-            username: "chuchu@gmail.com",
+            username: "922377791",
             // studentID: "123456",
             // studentName: "anudeep",
             // userRole: "admin"
@@ -167,20 +173,7 @@ describe("Testing question register route", () => {
         expect(res.statusCode).toEqual(200);
     })
 
-    test("testing insert data", async () => {
-        const res = await request(app).post('/questionRegister').send({
-            
-            userName: "abc",
-            question: "abc",
-            answer: "abc",
-            feedback: "abc",
-            comment: "abc",
-            rating: "abc",
-            userRole: "abc"
-        });
 
-        expect(res.statusCode).toEqual(200);
-    })
 
 })
 
