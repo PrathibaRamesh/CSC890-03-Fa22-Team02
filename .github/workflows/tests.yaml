@@ -18,5 +18,4 @@ jobs:
         working-directory: ./sfsu-csc-help/backend
         run: |
           npx jest --coverage --runInBand --forceExit
-      - name: Jest Coverage Comment
-        uses: MishaKav/jest-coverage-comment@main
+    
