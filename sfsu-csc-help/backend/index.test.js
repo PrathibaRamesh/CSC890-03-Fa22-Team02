@@ -162,9 +162,6 @@ describe("Testing question register route", () => {
             userName: "abc",
             question: "abc",
             answer: "abc",
-            feedback: "abc",
-            comment: "abc",
-            rating: "abc",
             userRole: "abc"
         });
 
