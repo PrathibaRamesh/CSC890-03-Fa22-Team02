@@ -58,6 +58,7 @@ describe("register route", () => {
         expect(res.body).toEqual({message2: "Password must contain 8 to 13 characters without special characters. Please correct it!"});
     })
 
+    //test comment
     
 
       test("testing successfull registration", async () => {
