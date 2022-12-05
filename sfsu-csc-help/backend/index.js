@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 3008;
+const PORT = 3000;
 
 // Used in encryption
 let key = "xcdade22kao^mdq&";
@@ -163,7 +163,7 @@ app.post('/questionRegister', (req, res) => {
     const userRole = req.body.userRole;
 
     console.log("We are in questionRegister page");
-    if(!req.body.userName || !req.body.question || !req.body.answer || !req.body.feedback || !req.body.comment || !req.body.rating || !req.body.userRole){
+    if(!req.body.userName || !req.body.question || !req.body.answer || !req.body.userRole){
         console.log("We are here");
         res.status(400).json('you need to pass firstname');
         return;
